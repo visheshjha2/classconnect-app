@@ -16,6 +16,7 @@ import { Route as AuthSignUpRouteImport } from './routes/auth.sign-up'
 import { Route as StudentDashboardRouteImport } from './routes/student.dashboard'
 import { Route as StudentHomeworkRouteImport } from './routes/student.homework'
 import { Route as StudentNotificationsRouteImport } from './routes/student.notifications'
+import { Route as StudentPaymentRouteImport } from './routes/student.payment'
 import { Route as StudentScheduleRouteImport } from './routes/student.schedule'
 import { Route as StudentStudyMaterialsRouteImport } from './routes/student.study-materials'
 
@@ -54,6 +55,11 @@ const StudentNotificationsRoute = StudentNotificationsRouteImport.update({
   path: '/student/notifications',
   getParentRoute: () => rootRouteImport,
 } as any)
+const StudentPaymentRoute = StudentPaymentRouteImport.update({
+  id: '/student/payment',
+  path: '/student/payment',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const StudentScheduleRoute = StudentScheduleRouteImport.update({
   id: '/student/schedule',
   path: '/student/schedule',
@@ -73,6 +79,7 @@ export interface FileRoutesByFullPath {
   '/student/dashboard': typeof StudentDashboardRoute
   '/student/homework': typeof StudentHomeworkRoute
   '/student/notifications': typeof StudentNotificationsRoute
+  '/student/payment': typeof StudentPaymentRoute
   '/student/schedule': typeof StudentScheduleRoute
   '/student/study-materials': typeof StudentStudyMaterialsRoute
 }
@@ -84,6 +91,7 @@ export interface FileRoutesByTo {
   '/student/dashboard': typeof StudentDashboardRoute
   '/student/homework': typeof StudentHomeworkRoute
   '/student/notifications': typeof StudentNotificationsRoute
+  '/student/payment': typeof StudentPaymentRoute
   '/student/schedule': typeof StudentScheduleRoute
   '/student/study-materials': typeof StudentStudyMaterialsRoute
 }
@@ -96,6 +104,7 @@ export interface FileRoutesById {
   '/student/dashboard': typeof StudentDashboardRoute
   '/student/homework': typeof StudentHomeworkRoute
   '/student/notifications': typeof StudentNotificationsRoute
+  '/student/payment': typeof StudentPaymentRoute
   '/student/schedule': typeof StudentScheduleRoute
   '/student/study-materials': typeof StudentStudyMaterialsRoute
 }
@@ -109,6 +118,7 @@ export interface FileRouteTypes {
     | '/student/dashboard'
     | '/student/homework'
     | '/student/notifications'
+    | '/student/payment'
     | '/student/schedule'
     | '/student/study-materials'
   fileRoutesByTo: FileRoutesByTo
@@ -120,6 +130,7 @@ export interface FileRouteTypes {
     | '/student/dashboard'
     | '/student/homework'
     | '/student/notifications'
+    | '/student/payment'
     | '/student/schedule'
     | '/student/study-materials'
   id:
@@ -131,6 +142,7 @@ export interface FileRouteTypes {
     | '/student/dashboard'
     | '/student/homework'
     | '/student/notifications'
+    | '/student/payment'
     | '/student/schedule'
     | '/student/study-materials'
   fileRoutesById: FileRoutesById
@@ -143,6 +155,7 @@ export interface RootRouteChildren {
   StudentDashboardRoute: typeof StudentDashboardRoute
   StudentHomeworkRoute: typeof StudentHomeworkRoute
   StudentNotificationsRoute: typeof StudentNotificationsRoute
+  StudentPaymentRoute: typeof StudentPaymentRoute
   StudentScheduleRoute: typeof StudentScheduleRoute
   StudentStudyMaterialsRoute: typeof StudentStudyMaterialsRoute
 }
@@ -198,6 +211,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StudentNotificationsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/student/payment': {
+      id: '/student/payment'
+      path: '/student/payment'
+      fullPath: '/student/payment'
+      preLoaderRoute: typeof StudentPaymentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/student/schedule': {
       id: '/student/schedule'
       path: '/student/schedule'
@@ -223,6 +243,7 @@ const rootRouteChildren: RootRouteChildren = {
   StudentDashboardRoute: StudentDashboardRoute,
   StudentHomeworkRoute: StudentHomeworkRoute,
   StudentNotificationsRoute: StudentNotificationsRoute,
+  StudentPaymentRoute: StudentPaymentRoute,
   StudentScheduleRoute: StudentScheduleRoute,
   StudentStudyMaterialsRoute: StudentStudyMaterialsRoute,
 }
