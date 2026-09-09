@@ -16,7 +16,7 @@ export const Route = createFileRoute("/student/notifications")({
       },
     ],
   }),
-  component: StudentNotifications;
+  component: StudentNotifications,
 });
 
 function StudentNotifications() {
