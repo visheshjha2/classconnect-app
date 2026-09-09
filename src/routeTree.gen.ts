@@ -10,12 +10,26 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthForgotPasswordRouteImport } from './routes/auth.forgot-password'
 import { Route as AuthLoginRouteImport } from './routes/auth.login'
 import { Route as AuthSignUpRouteImport } from './routes/auth.sign-up'
+import { Route as StudentDashboardRouteImport } from './routes/student.dashboard'
+import { Route as StudentHomeworkRouteImport } from './routes/student.homework'
+import { Route as StudentNotificationsRouteImport } from './routes/student.notifications'
+import { Route as StudentPaymentRouteImport } from './routes/student.payment'
+import { Route as StudentScheduleRouteImport } from './routes/student.schedule'
+import { Route as StudentStudyMaterialsRouteImport } from './routes/student.study-materials'
+import { Route as StudentSupportRouteImport } from './routes/student.support'
+import { Route as TeacherDashboardRouteImport } from './routes/teacher.dashboard'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthForgotPasswordRoute = AuthForgotPasswordRouteImport.update({
+  id: '/auth/forgot-password',
+  path: '/auth/forgot-password',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthLoginRoute = AuthLoginRouteImport.update({
@@ -28,35 +42,148 @@ const AuthSignUpRoute = AuthSignUpRouteImport.update({
   path: '/auth/sign-up',
   getParentRoute: () => rootRouteImport,
 } as any)
+const StudentDashboardRoute = StudentDashboardRouteImport.update({
+  id: '/student/dashboard',
+  path: '/student/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StudentHomeworkRoute = StudentHomeworkRouteImport.update({
+  id: '/student/homework',
+  path: '/student/homework',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StudentNotificationsRoute = StudentNotificationsRouteImport.update({
+  id: '/student/notifications',
+  path: '/student/notifications',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StudentPaymentRoute = StudentPaymentRouteImport.update({
+  id: '/student/payment',
+  path: '/student/payment',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StudentScheduleRoute = StudentScheduleRouteImport.update({
+  id: '/student/schedule',
+  path: '/student/schedule',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StudentStudyMaterialsRoute = StudentStudyMaterialsRouteImport.update({
+  id: '/student/study-materials',
+  path: '/student/study-materials',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StudentSupportRoute = StudentSupportRouteImport.update({
+  id: '/student/support',
+  path: '/student/support',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TeacherDashboardRoute = TeacherDashboardRouteImport.update({
+  id: '/teacher/dashboard',
+  path: '/teacher/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth/forgot-password': typeof AuthForgotPasswordRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/sign-up': typeof AuthSignUpRoute
+  '/student/dashboard': typeof StudentDashboardRoute
+  '/student/homework': typeof StudentHomeworkRoute
+  '/student/notifications': typeof StudentNotificationsRoute
+  '/student/payment': typeof StudentPaymentRoute
+  '/student/schedule': typeof StudentScheduleRoute
+  '/student/study-materials': typeof StudentStudyMaterialsRoute
+  '/student/support': typeof StudentSupportRoute
+  '/teacher/dashboard': typeof TeacherDashboardRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth/forgot-password': typeof AuthForgotPasswordRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/sign-up': typeof AuthSignUpRoute
+  '/student/dashboard': typeof StudentDashboardRoute
+  '/student/homework': typeof StudentHomeworkRoute
+  '/student/notifications': typeof StudentNotificationsRoute
+  '/student/payment': typeof StudentPaymentRoute
+  '/student/schedule': typeof StudentScheduleRoute
+  '/student/study-materials': typeof StudentStudyMaterialsRoute
+  '/student/support': typeof StudentSupportRoute
+  '/teacher/dashboard': typeof TeacherDashboardRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/auth/forgot-password': typeof AuthForgotPasswordRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/sign-up': typeof AuthSignUpRoute
+  '/student/dashboard': typeof StudentDashboardRoute
+  '/student/homework': typeof StudentHomeworkRoute
+  '/student/notifications': typeof StudentNotificationsRoute
+  '/student/payment': typeof StudentPaymentRoute
+  '/student/schedule': typeof StudentScheduleRoute
+  '/student/study-materials': typeof StudentStudyMaterialsRoute
+  '/student/support': typeof StudentSupportRoute
+  '/teacher/dashboard': typeof TeacherDashboardRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth/login' | '/auth/sign-up'
+  fullPaths:
+    | '/'
+    | '/auth/forgot-password'
+    | '/auth/login'
+    | '/auth/sign-up'
+    | '/student/dashboard'
+    | '/student/homework'
+    | '/student/notifications'
+    | '/student/payment'
+    | '/student/schedule'
+    | '/student/study-materials'
+    | '/student/support'
+    | '/teacher/dashboard'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth/login' | '/auth/sign-up'
-  id: '__root__' | '/' | '/auth/login' | '/auth/sign-up'
+  to:
+    | '/'
+    | '/auth/forgot-password'
+    | '/auth/login'
+    | '/auth/sign-up'
+    | '/student/dashboard'
+    | '/student/homework'
+    | '/student/notifications'
+    | '/student/payment'
+    | '/student/schedule'
+    | '/student/study-materials'
+    | '/student/support'
+    | '/teacher/dashboard'
+  id:
+    | '__root__'
+    | '/'
+    | '/auth/forgot-password'
+    | '/auth/login'
+    | '/auth/sign-up'
+    | '/student/dashboard'
+    | '/student/homework'
+    | '/student/notifications'
+    | '/student/payment'
+    | '/student/schedule'
+    | '/student/study-materials'
+    | '/student/support'
+    | '/teacher/dashboard'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthForgotPasswordRoute: typeof AuthForgotPasswordRoute
   AuthLoginRoute: typeof AuthLoginRoute
   AuthSignUpRoute: typeof AuthSignUpRoute
+  StudentDashboardRoute: typeof StudentDashboardRoute
+  StudentHomeworkRoute: typeof StudentHomeworkRoute
+  StudentNotificationsRoute: typeof StudentNotificationsRoute
+  StudentPaymentRoute: typeof StudentPaymentRoute
+  StudentScheduleRoute: typeof StudentScheduleRoute
+  StudentStudyMaterialsRoute: typeof StudentStudyMaterialsRoute
+  StudentSupportRoute: typeof StudentSupportRoute
+  TeacherDashboardRoute: typeof TeacherDashboardRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -66,6 +193,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth/forgot-password': {
+      id: '/auth/forgot-password'
+      path: '/auth/forgot-password'
+      fullPath: '/auth/forgot-password'
+      preLoaderRoute: typeof AuthForgotPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth/login': {
@@ -82,13 +216,78 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthSignUpRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/student/dashboard': {
+      id: '/student/dashboard'
+      path: '/student/dashboard'
+      fullPath: '/student/dashboard'
+      preLoaderRoute: typeof StudentDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/student/homework': {
+      id: '/student/homework'
+      path: '/student/homework'
+      fullPath: '/student/homework'
+      preLoaderRoute: typeof StudentHomeworkRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/student/notifications': {
+      id: '/student/notifications'
+      path: '/student/notifications'
+      fullPath: '/student/notifications'
+      preLoaderRoute: typeof StudentNotificationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/student/payment': {
+      id: '/student/payment'
+      path: '/student/payment'
+      fullPath: '/student/payment'
+      preLoaderRoute: typeof StudentPaymentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/student/schedule': {
+      id: '/student/schedule'
+      path: '/student/schedule'
+      fullPath: '/student/schedule'
+      preLoaderRoute: typeof StudentScheduleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/student/study-materials': {
+      id: '/student/study-materials'
+      path: '/student/study-materials'
+      fullPath: '/student/study-materials'
+      preLoaderRoute: typeof StudentStudyMaterialsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/student/support': {
+      id: '/student/support'
+      path: '/student/support'
+      fullPath: '/student/support'
+      preLoaderRoute: typeof StudentSupportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/teacher/dashboard': {
+      id: '/teacher/dashboard'
+      path: '/teacher/dashboard'
+      fullPath: '/teacher/dashboard'
+      preLoaderRoute: typeof TeacherDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthForgotPasswordRoute: AuthForgotPasswordRoute,
   AuthLoginRoute: AuthLoginRoute,
   AuthSignUpRoute: AuthSignUpRoute,
+  StudentDashboardRoute: StudentDashboardRoute,
+  StudentHomeworkRoute: StudentHomeworkRoute,
+  StudentNotificationsRoute: StudentNotificationsRoute,
+  StudentPaymentRoute: StudentPaymentRoute,
+  StudentScheduleRoute: StudentScheduleRoute,
+  StudentStudyMaterialsRoute: StudentStudyMaterialsRoute,
+  StudentSupportRoute: StudentSupportRoute,
+  TeacherDashboardRoute: TeacherDashboardRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
