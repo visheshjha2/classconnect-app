@@ -14,6 +14,7 @@ import { Route as AuthForgotPasswordRouteImport } from './routes/auth.forgot-pas
 import { Route as AuthLoginRouteImport } from './routes/auth.login'
 import { Route as AuthSignUpRouteImport } from './routes/auth.sign-up'
 import { Route as StudentDashboardRouteImport } from './routes/student.dashboard'
+import { Route as StudentHomeworkRouteImport } from './routes/student.homework'
 import { Route as StudentScheduleRouteImport } from './routes/student.schedule'
 
 const IndexRoute = IndexRouteImport.update({
@@ -41,6 +42,11 @@ const StudentDashboardRoute = StudentDashboardRouteImport.update({
   path: '/student/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
+const StudentHomeworkRoute = StudentHomeworkRouteImport.update({
+  id: '/student/homework',
+  path: '/student/homework',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const StudentScheduleRoute = StudentScheduleRouteImport.update({
   id: '/student/schedule',
   path: '/student/schedule',
@@ -53,6 +59,7 @@ export interface FileRoutesByFullPath {
   '/auth/login': typeof AuthLoginRoute
   '/auth/sign-up': typeof AuthSignUpRoute
   '/student/dashboard': typeof StudentDashboardRoute
+  '/student/homework': typeof StudentHomeworkRoute
   '/student/schedule': typeof StudentScheduleRoute
 }
 export interface FileRoutesByTo {
@@ -61,6 +68,7 @@ export interface FileRoutesByTo {
   '/auth/login': typeof AuthLoginRoute
   '/auth/sign-up': typeof AuthSignUpRoute
   '/student/dashboard': typeof StudentDashboardRoute
+  '/student/homework': typeof StudentHomeworkRoute
   '/student/schedule': typeof StudentScheduleRoute
 }
 export interface FileRoutesById {
@@ -70,6 +78,7 @@ export interface FileRoutesById {
   '/auth/login': typeof AuthLoginRoute
   '/auth/sign-up': typeof AuthSignUpRoute
   '/student/dashboard': typeof StudentDashboardRoute
+  '/student/homework': typeof StudentHomeworkRoute
   '/student/schedule': typeof StudentScheduleRoute
 }
 export interface FileRouteTypes {
@@ -80,6 +89,7 @@ export interface FileRouteTypes {
     | '/auth/login'
     | '/auth/sign-up'
     | '/student/dashboard'
+    | '/student/homework'
     | '/student/schedule'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -88,6 +98,7 @@ export interface FileRouteTypes {
     | '/auth/login'
     | '/auth/sign-up'
     | '/student/dashboard'
+    | '/student/homework'
     | '/student/schedule'
   id:
     | '__root__'
@@ -96,6 +107,7 @@ export interface FileRouteTypes {
     | '/auth/login'
     | '/auth/sign-up'
     | '/student/dashboard'
+    | '/student/homework'
     | '/student/schedule'
   fileRoutesById: FileRoutesById
 }
@@ -105,6 +117,7 @@ export interface RootRouteChildren {
   AuthLoginRoute: typeof AuthLoginRoute
   AuthSignUpRoute: typeof AuthSignUpRoute
   StudentDashboardRoute: typeof StudentDashboardRoute
+  StudentHomeworkRoute: typeof StudentHomeworkRoute
   StudentScheduleRoute: typeof StudentScheduleRoute
 }
 
@@ -145,6 +158,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StudentDashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/student/homework': {
+      id: '/student/homework'
+      path: '/student/homework'
+      fullPath: '/student/homework'
+      preLoaderRoute: typeof StudentHomeworkRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/student/schedule': {
       id: '/student/schedule'
       path: '/student/schedule'
@@ -161,6 +181,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthLoginRoute: AuthLoginRoute,
   AuthSignUpRoute: AuthSignUpRoute,
   StudentDashboardRoute: StudentDashboardRoute,
+  StudentHomeworkRoute: StudentHomeworkRoute,
   StudentScheduleRoute: StudentScheduleRoute,
 }
 export const routeTree = rootRouteImport
