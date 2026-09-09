@@ -17,6 +17,7 @@ import { Route as StudentDashboardRouteImport } from './routes/student.dashboard
 import { Route as StudentHomeworkRouteImport } from './routes/student.homework'
 import { Route as StudentNotificationsRouteImport } from './routes/student.notifications'
 import { Route as StudentScheduleRouteImport } from './routes/student.schedule'
+import { Route as StudentStudyMaterialsRouteImport } from './routes/student.study-materials'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -58,6 +59,11 @@ const StudentScheduleRoute = StudentScheduleRouteImport.update({
   path: '/student/schedule',
   getParentRoute: () => rootRouteImport,
 } as any)
+const StudentStudyMaterialsRoute = StudentStudyMaterialsRouteImport.update({
+  id: '/student/study-materials',
+  path: '/student/study-materials',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -68,6 +74,7 @@ export interface FileRoutesByFullPath {
   '/student/homework': typeof StudentHomeworkRoute
   '/student/notifications': typeof StudentNotificationsRoute
   '/student/schedule': typeof StudentScheduleRoute
+  '/student/study-materials': typeof StudentStudyMaterialsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -78,6 +85,7 @@ export interface FileRoutesByTo {
   '/student/homework': typeof StudentHomeworkRoute
   '/student/notifications': typeof StudentNotificationsRoute
   '/student/schedule': typeof StudentScheduleRoute
+  '/student/study-materials': typeof StudentStudyMaterialsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -89,6 +97,7 @@ export interface FileRoutesById {
   '/student/homework': typeof StudentHomeworkRoute
   '/student/notifications': typeof StudentNotificationsRoute
   '/student/schedule': typeof StudentScheduleRoute
+  '/student/study-materials': typeof StudentStudyMaterialsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -101,6 +110,7 @@ export interface FileRouteTypes {
     | '/student/homework'
     | '/student/notifications'
     | '/student/schedule'
+    | '/student/study-materials'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -111,6 +121,7 @@ export interface FileRouteTypes {
     | '/student/homework'
     | '/student/notifications'
     | '/student/schedule'
+    | '/student/study-materials'
   id:
     | '__root__'
     | '/'
@@ -121,6 +132,7 @@ export interface FileRouteTypes {
     | '/student/homework'
     | '/student/notifications'
     | '/student/schedule'
+    | '/student/study-materials'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -132,6 +144,7 @@ export interface RootRouteChildren {
   StudentHomeworkRoute: typeof StudentHomeworkRoute
   StudentNotificationsRoute: typeof StudentNotificationsRoute
   StudentScheduleRoute: typeof StudentScheduleRoute
+  StudentStudyMaterialsRoute: typeof StudentStudyMaterialsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -192,6 +205,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StudentScheduleRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/student/study-materials': {
+      id: '/student/study-materials'
+      path: '/student/study-materials'
+      fullPath: '/student/study-materials'
+      preLoaderRoute: typeof StudentStudyMaterialsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -204,6 +224,7 @@ const rootRouteChildren: RootRouteChildren = {
   StudentHomeworkRoute: StudentHomeworkRoute,
   StudentNotificationsRoute: StudentNotificationsRoute,
   StudentScheduleRoute: StudentScheduleRoute,
+  StudentStudyMaterialsRoute: StudentStudyMaterialsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
