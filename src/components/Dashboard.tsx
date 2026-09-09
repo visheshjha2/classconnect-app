@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "@tanstack/react-router";
 import { LogOut, Share2, Trash2 } from "lucide-react";
-import { useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { toast } from "sonner";
 
 import { useClassConnect } from "@/lib/classconnect";
@@ -163,11 +163,13 @@ export function DeleteAccountSection({ isTeacher }: { isTeacher: boolean }) {
   );
 }
 
-export function useRequireRole(role: "teacher" | "student") {
-  const { ready, user } = useClassConnect();
+export function useGuard(role: "teacher" | "student") {
+  const cc = useClassConnect();
   const navigate = useNavigate();
-  if (ready && (!user || user.role !== role)) {
-    navigate({ to: "/" });
-  }
-  return useClassConnect();
+  useEffect(() => {
+    if (cc.ready && (!cc.user || cc.user.role !== role)) {
+      navigate({ to: "/" });
+    }
+  }, [cc.ready, cc.user, role, navigate]);
+  return cc;
 }
