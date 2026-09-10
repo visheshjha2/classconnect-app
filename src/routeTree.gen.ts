@@ -22,6 +22,7 @@ import { Route as StudentStudyMaterialsRouteImport } from './routes/student.stud
 import { Route as StudentSupportRouteImport } from './routes/student.support'
 import { Route as TeacherDashboardRouteImport } from './routes/teacher.dashboard'
 import { Route as TeacherHomeworkRouteImport } from './routes/teacher.homework'
+import { Route as TeacherNotificationsRouteImport } from './routes/teacher.notifications'
 import { Route as TeacherScheduleRouteImport } from './routes/teacher.schedule'
 
 const IndexRoute = IndexRouteImport.update({
@@ -89,6 +90,11 @@ const TeacherHomeworkRoute = TeacherHomeworkRouteImport.update({
   path: '/teacher/homework',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TeacherNotificationsRoute = TeacherNotificationsRouteImport.update({
+  id: '/teacher/notifications',
+  path: '/teacher/notifications',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TeacherScheduleRoute = TeacherScheduleRouteImport.update({
   id: '/teacher/schedule',
   path: '/teacher/schedule',
@@ -109,6 +115,7 @@ export interface FileRoutesByFullPath {
   '/student/support': typeof StudentSupportRoute
   '/teacher/dashboard': typeof TeacherDashboardRoute
   '/teacher/homework': typeof TeacherHomeworkRoute
+  '/teacher/notifications': typeof TeacherNotificationsRoute
   '/teacher/schedule': typeof TeacherScheduleRoute
 }
 export interface FileRoutesByTo {
@@ -125,6 +132,7 @@ export interface FileRoutesByTo {
   '/student/support': typeof StudentSupportRoute
   '/teacher/dashboard': typeof TeacherDashboardRoute
   '/teacher/homework': typeof TeacherHomeworkRoute
+  '/teacher/notifications': typeof TeacherNotificationsRoute
   '/teacher/schedule': typeof TeacherScheduleRoute
 }
 export interface FileRoutesById {
@@ -142,6 +150,7 @@ export interface FileRoutesById {
   '/student/support': typeof StudentSupportRoute
   '/teacher/dashboard': typeof TeacherDashboardRoute
   '/teacher/homework': typeof TeacherHomeworkRoute
+  '/teacher/notifications': typeof TeacherNotificationsRoute
   '/teacher/schedule': typeof TeacherScheduleRoute
 }
 export interface FileRouteTypes {
@@ -160,6 +169,7 @@ export interface FileRouteTypes {
     | '/student/support'
     | '/teacher/dashboard'
     | '/teacher/homework'
+    | '/teacher/notifications'
     | '/teacher/schedule'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -176,6 +186,7 @@ export interface FileRouteTypes {
     | '/student/support'
     | '/teacher/dashboard'
     | '/teacher/homework'
+    | '/teacher/notifications'
     | '/teacher/schedule'
   id:
     | '__root__'
@@ -192,6 +203,7 @@ export interface FileRouteTypes {
     | '/student/support'
     | '/teacher/dashboard'
     | '/teacher/homework'
+    | '/teacher/notifications'
     | '/teacher/schedule'
   fileRoutesById: FileRoutesById
 }
@@ -209,6 +221,7 @@ export interface RootRouteChildren {
   StudentSupportRoute: typeof StudentSupportRoute
   TeacherDashboardRoute: typeof TeacherDashboardRoute
   TeacherHomeworkRoute: typeof TeacherHomeworkRoute
+  TeacherNotificationsRoute: typeof TeacherNotificationsRoute
   TeacherScheduleRoute: typeof TeacherScheduleRoute
 }
 
@@ -305,6 +318,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TeacherHomeworkRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/teacher/notifications': {
+      id: '/teacher/notifications'
+      path: '/teacher/notifications'
+      fullPath: '/teacher/notifications'
+      preLoaderRoute: typeof TeacherNotificationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/teacher/schedule': {
       id: '/teacher/schedule'
       path: '/teacher/schedule'
@@ -329,6 +349,7 @@ const rootRouteChildren: RootRouteChildren = {
   StudentSupportRoute: StudentSupportRoute,
   TeacherDashboardRoute: TeacherDashboardRoute,
   TeacherHomeworkRoute: TeacherHomeworkRoute,
+  TeacherNotificationsRoute: TeacherNotificationsRoute,
   TeacherScheduleRoute: TeacherScheduleRoute,
 }
 export const routeTree = rootRouteImport
