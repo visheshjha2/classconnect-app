@@ -15,8 +15,8 @@ export interface User {
   role: Role;
   fullName: string;
   username: string;
-  email?: string;
-  phone?: string;
+  email?: string | undefined;
+  phone?: string | undefined;
   password: string;
 }
 
@@ -24,7 +24,7 @@ export interface ScheduleItem {
   id: string;
   day: string;
   title: string;
-  description?: string;
+  description?: string | undefined;
   startTime: string;
   endTime: string;
 }
@@ -33,14 +33,14 @@ export interface MaterialItem {
   id: string;
   title: string;
   description: string;
-  fileUrl?: string;
+  fileUrl?: string | undefined;
 }
 
 export interface HomeworkItem {
   id: string;
   title: string;
   description: string;
-  dueDate?: string;
+  dueDate?: string | undefined;
 }
 
 export interface NotificationItem {
@@ -191,17 +191,17 @@ interface Ctx {
     role: Role;
     fullName: string;
     username: string;
-    email?: string;
-    phone?: string;
+    email?: string | undefined;
+    phone?: string | undefined;
     password: string;
-    className?: string;
-    roomId?: string;
+    className?: string | undefined;
+    roomId?: string | undefined;
   }) => void;
   login: (input: {
     role: Role;
     identifier: string;
     password: string;
-    roomId?: string;
+    roomId?: string | undefined;
   }) => void;
   resetPassword: (identifier: string, newPassword: string) => void;
   logout: () => void;

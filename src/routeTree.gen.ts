@@ -21,6 +21,12 @@ import { Route as StudentScheduleRouteImport } from './routes/student.schedule'
 import { Route as StudentStudyMaterialsRouteImport } from './routes/student.study-materials'
 import { Route as StudentSupportRouteImport } from './routes/student.support'
 import { Route as TeacherDashboardRouteImport } from './routes/teacher.dashboard'
+import { Route as TeacherHomeworkRouteImport } from './routes/teacher.homework'
+import { Route as TeacherNotificationsRouteImport } from './routes/teacher.notifications'
+import { Route as TeacherPaymentRouteImport } from './routes/teacher.payment'
+import { Route as TeacherScheduleRouteImport } from './routes/teacher.schedule'
+import { Route as TeacherStudentsRouteImport } from './routes/teacher.students'
+import { Route as TeacherStudyMaterialsRouteImport } from './routes/teacher.study-materials'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -82,6 +88,36 @@ const TeacherDashboardRoute = TeacherDashboardRouteImport.update({
   path: '/teacher/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TeacherHomeworkRoute = TeacherHomeworkRouteImport.update({
+  id: '/teacher/homework',
+  path: '/teacher/homework',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TeacherNotificationsRoute = TeacherNotificationsRouteImport.update({
+  id: '/teacher/notifications',
+  path: '/teacher/notifications',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TeacherPaymentRoute = TeacherPaymentRouteImport.update({
+  id: '/teacher/payment',
+  path: '/teacher/payment',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TeacherScheduleRoute = TeacherScheduleRouteImport.update({
+  id: '/teacher/schedule',
+  path: '/teacher/schedule',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TeacherStudentsRoute = TeacherStudentsRouteImport.update({
+  id: '/teacher/students',
+  path: '/teacher/students',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TeacherStudyMaterialsRoute = TeacherStudyMaterialsRouteImport.update({
+  id: '/teacher/study-materials',
+  path: '/teacher/study-materials',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -96,6 +132,12 @@ export interface FileRoutesByFullPath {
   '/student/study-materials': typeof StudentStudyMaterialsRoute
   '/student/support': typeof StudentSupportRoute
   '/teacher/dashboard': typeof TeacherDashboardRoute
+  '/teacher/homework': typeof TeacherHomeworkRoute
+  '/teacher/notifications': typeof TeacherNotificationsRoute
+  '/teacher/payment': typeof TeacherPaymentRoute
+  '/teacher/schedule': typeof TeacherScheduleRoute
+  '/teacher/students': typeof TeacherStudentsRoute
+  '/teacher/study-materials': typeof TeacherStudyMaterialsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -110,6 +152,12 @@ export interface FileRoutesByTo {
   '/student/study-materials': typeof StudentStudyMaterialsRoute
   '/student/support': typeof StudentSupportRoute
   '/teacher/dashboard': typeof TeacherDashboardRoute
+  '/teacher/homework': typeof TeacherHomeworkRoute
+  '/teacher/notifications': typeof TeacherNotificationsRoute
+  '/teacher/payment': typeof TeacherPaymentRoute
+  '/teacher/schedule': typeof TeacherScheduleRoute
+  '/teacher/students': typeof TeacherStudentsRoute
+  '/teacher/study-materials': typeof TeacherStudyMaterialsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -125,6 +173,12 @@ export interface FileRoutesById {
   '/student/study-materials': typeof StudentStudyMaterialsRoute
   '/student/support': typeof StudentSupportRoute
   '/teacher/dashboard': typeof TeacherDashboardRoute
+  '/teacher/homework': typeof TeacherHomeworkRoute
+  '/teacher/notifications': typeof TeacherNotificationsRoute
+  '/teacher/payment': typeof TeacherPaymentRoute
+  '/teacher/schedule': typeof TeacherScheduleRoute
+  '/teacher/students': typeof TeacherStudentsRoute
+  '/teacher/study-materials': typeof TeacherStudyMaterialsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -141,6 +195,12 @@ export interface FileRouteTypes {
     | '/student/study-materials'
     | '/student/support'
     | '/teacher/dashboard'
+    | '/teacher/homework'
+    | '/teacher/notifications'
+    | '/teacher/payment'
+    | '/teacher/schedule'
+    | '/teacher/students'
+    | '/teacher/study-materials'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -155,6 +215,12 @@ export interface FileRouteTypes {
     | '/student/study-materials'
     | '/student/support'
     | '/teacher/dashboard'
+    | '/teacher/homework'
+    | '/teacher/notifications'
+    | '/teacher/payment'
+    | '/teacher/schedule'
+    | '/teacher/students'
+    | '/teacher/study-materials'
   id:
     | '__root__'
     | '/'
@@ -169,6 +235,12 @@ export interface FileRouteTypes {
     | '/student/study-materials'
     | '/student/support'
     | '/teacher/dashboard'
+    | '/teacher/homework'
+    | '/teacher/notifications'
+    | '/teacher/payment'
+    | '/teacher/schedule'
+    | '/teacher/students'
+    | '/teacher/study-materials'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -184,6 +256,12 @@ export interface RootRouteChildren {
   StudentStudyMaterialsRoute: typeof StudentStudyMaterialsRoute
   StudentSupportRoute: typeof StudentSupportRoute
   TeacherDashboardRoute: typeof TeacherDashboardRoute
+  TeacherHomeworkRoute: typeof TeacherHomeworkRoute
+  TeacherNotificationsRoute: typeof TeacherNotificationsRoute
+  TeacherPaymentRoute: typeof TeacherPaymentRoute
+  TeacherScheduleRoute: typeof TeacherScheduleRoute
+  TeacherStudentsRoute: typeof TeacherStudentsRoute
+  TeacherStudyMaterialsRoute: typeof TeacherStudyMaterialsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -272,6 +350,48 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TeacherDashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/teacher/homework': {
+      id: '/teacher/homework'
+      path: '/teacher/homework'
+      fullPath: '/teacher/homework'
+      preLoaderRoute: typeof TeacherHomeworkRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/teacher/notifications': {
+      id: '/teacher/notifications'
+      path: '/teacher/notifications'
+      fullPath: '/teacher/notifications'
+      preLoaderRoute: typeof TeacherNotificationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/teacher/payment': {
+      id: '/teacher/payment'
+      path: '/teacher/payment'
+      fullPath: '/teacher/payment'
+      preLoaderRoute: typeof TeacherPaymentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/teacher/schedule': {
+      id: '/teacher/schedule'
+      path: '/teacher/schedule'
+      fullPath: '/teacher/schedule'
+      preLoaderRoute: typeof TeacherScheduleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/teacher/students': {
+      id: '/teacher/students'
+      path: '/teacher/students'
+      fullPath: '/teacher/students'
+      preLoaderRoute: typeof TeacherStudentsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/teacher/study-materials': {
+      id: '/teacher/study-materials'
+      path: '/teacher/study-materials'
+      fullPath: '/teacher/study-materials'
+      preLoaderRoute: typeof TeacherStudyMaterialsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -288,6 +408,12 @@ const rootRouteChildren: RootRouteChildren = {
   StudentStudyMaterialsRoute: StudentStudyMaterialsRoute,
   StudentSupportRoute: StudentSupportRoute,
   TeacherDashboardRoute: TeacherDashboardRoute,
+  TeacherHomeworkRoute: TeacherHomeworkRoute,
+  TeacherNotificationsRoute: TeacherNotificationsRoute,
+  TeacherPaymentRoute: TeacherPaymentRoute,
+  TeacherScheduleRoute: TeacherScheduleRoute,
+  TeacherStudentsRoute: TeacherStudentsRoute,
+  TeacherStudyMaterialsRoute: TeacherStudyMaterialsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
