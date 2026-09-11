@@ -206,6 +206,7 @@ interface Ctx {
   resetPassword: (identifier: string, newPassword: string) => void;
   logout: () => void;
   deleteAccount: (password: string) => void;
+  updateProfile: (patch: Partial<Pick<User, "fullName" | "email" | "phone">>) => void;
   updateClass: (patch: Partial<ClassRecord>) => void;
   removeStudent: (studentId: string) => void;
   toggleBlockStudent: (studentId: string) => void;
@@ -369,6 +370,17 @@ export function ClassConnectProvider({ children }: { children: ReactNode }) {
     });
   };
 
+  const updateProfile: Ctx["updateProfile"] = (patch) => {
+    const current = readDb();
+    if (!current.sessionUserId) throw new Error("You are not signed in");
+    commit({
+      ...current,
+      users: current.users.map((u) =>
+        u.id === current.sessionUserId ? { ...u, ...patch } : u,
+      ),
+    });
+  };
+
   const updateClass: Ctx["updateClass"] = (patch) => {
     const current = readDb();
     if (!classData) return;
@@ -410,6 +422,7 @@ export function ClassConnectProvider({ children }: { children: ReactNode }) {
         resetPassword,
         logout,
         deleteAccount,
+        updateProfile,
         updateClass,
         removeStudent,
         toggleBlockStudent,

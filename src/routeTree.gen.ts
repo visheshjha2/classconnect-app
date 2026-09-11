@@ -20,6 +20,7 @@ import { Route as StudentPaymentRouteImport } from './routes/student.payment'
 import { Route as StudentScheduleRouteImport } from './routes/student.schedule'
 import { Route as StudentStudyMaterialsRouteImport } from './routes/student.study-materials'
 import { Route as StudentSupportRouteImport } from './routes/student.support'
+import { Route as TeacherContactRouteImport } from './routes/teacher.contact'
 import { Route as TeacherDashboardRouteImport } from './routes/teacher.dashboard'
 import { Route as TeacherHomeworkRouteImport } from './routes/teacher.homework'
 import { Route as TeacherNotificationsRouteImport } from './routes/teacher.notifications'
@@ -83,6 +84,11 @@ const StudentSupportRoute = StudentSupportRouteImport.update({
   path: '/student/support',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TeacherContactRoute = TeacherContactRouteImport.update({
+  id: '/teacher/contact',
+  path: '/teacher/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TeacherDashboardRoute = TeacherDashboardRouteImport.update({
   id: '/teacher/dashboard',
   path: '/teacher/dashboard',
@@ -131,6 +137,7 @@ export interface FileRoutesByFullPath {
   '/student/schedule': typeof StudentScheduleRoute
   '/student/study-materials': typeof StudentStudyMaterialsRoute
   '/student/support': typeof StudentSupportRoute
+  '/teacher/contact': typeof TeacherContactRoute
   '/teacher/dashboard': typeof TeacherDashboardRoute
   '/teacher/homework': typeof TeacherHomeworkRoute
   '/teacher/notifications': typeof TeacherNotificationsRoute
@@ -151,6 +158,7 @@ export interface FileRoutesByTo {
   '/student/schedule': typeof StudentScheduleRoute
   '/student/study-materials': typeof StudentStudyMaterialsRoute
   '/student/support': typeof StudentSupportRoute
+  '/teacher/contact': typeof TeacherContactRoute
   '/teacher/dashboard': typeof TeacherDashboardRoute
   '/teacher/homework': typeof TeacherHomeworkRoute
   '/teacher/notifications': typeof TeacherNotificationsRoute
@@ -172,6 +180,7 @@ export interface FileRoutesById {
   '/student/schedule': typeof StudentScheduleRoute
   '/student/study-materials': typeof StudentStudyMaterialsRoute
   '/student/support': typeof StudentSupportRoute
+  '/teacher/contact': typeof TeacherContactRoute
   '/teacher/dashboard': typeof TeacherDashboardRoute
   '/teacher/homework': typeof TeacherHomeworkRoute
   '/teacher/notifications': typeof TeacherNotificationsRoute
@@ -194,6 +203,7 @@ export interface FileRouteTypes {
     | '/student/schedule'
     | '/student/study-materials'
     | '/student/support'
+    | '/teacher/contact'
     | '/teacher/dashboard'
     | '/teacher/homework'
     | '/teacher/notifications'
@@ -214,6 +224,7 @@ export interface FileRouteTypes {
     | '/student/schedule'
     | '/student/study-materials'
     | '/student/support'
+    | '/teacher/contact'
     | '/teacher/dashboard'
     | '/teacher/homework'
     | '/teacher/notifications'
@@ -234,6 +245,7 @@ export interface FileRouteTypes {
     | '/student/schedule'
     | '/student/study-materials'
     | '/student/support'
+    | '/teacher/contact'
     | '/teacher/dashboard'
     | '/teacher/homework'
     | '/teacher/notifications'
@@ -255,6 +267,7 @@ export interface RootRouteChildren {
   StudentScheduleRoute: typeof StudentScheduleRoute
   StudentStudyMaterialsRoute: typeof StudentStudyMaterialsRoute
   StudentSupportRoute: typeof StudentSupportRoute
+  TeacherContactRoute: typeof TeacherContactRoute
   TeacherDashboardRoute: typeof TeacherDashboardRoute
   TeacherHomeworkRoute: typeof TeacherHomeworkRoute
   TeacherNotificationsRoute: typeof TeacherNotificationsRoute
@@ -343,6 +356,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StudentSupportRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/teacher/contact': {
+      id: '/teacher/contact'
+      path: '/teacher/contact'
+      fullPath: '/teacher/contact'
+      preLoaderRoute: typeof TeacherContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/teacher/dashboard': {
       id: '/teacher/dashboard'
       path: '/teacher/dashboard'
@@ -407,6 +427,7 @@ const rootRouteChildren: RootRouteChildren = {
   StudentScheduleRoute: StudentScheduleRoute,
   StudentStudyMaterialsRoute: StudentStudyMaterialsRoute,
   StudentSupportRoute: StudentSupportRoute,
+  TeacherContactRoute: TeacherContactRoute,
   TeacherDashboardRoute: TeacherDashboardRoute,
   TeacherHomeworkRoute: TeacherHomeworkRoute,
   TeacherNotificationsRoute: TeacherNotificationsRoute,
