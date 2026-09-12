@@ -61,6 +61,7 @@ export interface NotificationItem {
 export interface ClassRecord {
   id: string;
   className: string;
+  profileImage?: string | undefined;
   roomId: string;
   teacherId: string;
   memberIds: string[];
