@@ -22,11 +22,18 @@ export interface User {
 
 export interface ScheduleItem {
   id: string;
-  day: string;
+  /** Legacy single-day field kept for older saved data. */
+  day?: string | undefined;
+  days?: string[] | undefined;
   title: string;
   description?: string | undefined;
   startTime: string;
   endTime: string;
+}
+
+export function scheduleDays(item: ScheduleItem): string[] {
+  if (item.days && item.days.length > 0) return item.days;
+  return item.day ? [item.day] : [];
 }
 
 export interface MaterialItem {
@@ -34,6 +41,7 @@ export interface MaterialItem {
   title: string;
   description: string;
   fileUrl?: string | undefined;
+  fileName?: string | undefined;
 }
 
 export interface HomeworkItem {
@@ -53,6 +61,7 @@ export interface NotificationItem {
 export interface ClassRecord {
   id: string;
   className: string;
+  profileImage?: string | undefined;
   roomId: string;
   teacherId: string;
   memberIds: string[];
@@ -177,6 +186,21 @@ function writeDb(db: Database) {
   window.localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
 }
 
+/** Homework disappears by itself once its due date has passed. */
+function pruneExpiredHomework(db: Database): Database {
+  const today = new Date();
+  const todayKey = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(
+    today.getDate(),
+  ).padStart(2, "0")}`;
+  return {
+    ...db,
+    classes: db.classes.map((c) => ({
+      ...c,
+      homework: (c.homework ?? []).filter((h) => !h.dueDate || h.dueDate >= todayKey),
+    })),
+  };
+}
+
 const id = (prefix: string) => `${prefix}_${Math.random().toString(36).slice(2, 10)}`;
 const roomCode = () => String(Math.floor(100000 + Math.random() * 900000));
 
@@ -219,7 +243,9 @@ export function ClassConnectProvider({ children }: { children: ReactNode }) {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    setDb(readDb());
+    const pruned = pruneExpiredHomework(readDb());
+    writeDb(pruned);
+    setDb(pruned);
     setReady(true);
   }, []);
 

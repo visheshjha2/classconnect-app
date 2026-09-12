@@ -33,6 +33,31 @@ export function PageShell({
   );
 }
 
+export function ClassAvatar({
+  src,
+  name,
+}: {
+  src?: string | undefined;
+  name?: string | undefined;
+}) {
+  return (
+    <div className="mb-6 flex flex-col items-center text-center">
+      {src ? (
+        <img
+          src={src}
+          alt={name ? `${name} class picture` : "Class picture"}
+          className="size-24 rounded-full border border-border object-cover shadow-sm"
+        />
+      ) : (
+        <span className="flex size-24 items-center justify-center rounded-full bg-accent text-3xl font-bold text-primary">
+          {(name ?? "C").charAt(0).toUpperCase()}
+        </span>
+      )}
+      {name ? <p className="mt-3 text-base font-semibold">{name}</p> : null}
+    </div>
+  );
+}
+
 export function EmptyState({
   icon,
   title,
