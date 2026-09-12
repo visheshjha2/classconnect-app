@@ -243,7 +243,9 @@ export function ClassConnectProvider({ children }: { children: ReactNode }) {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    setDb(readDb());
+    const pruned = pruneExpiredHomework(readDb());
+    writeDb(pruned);
+    setDb(pruned);
     setReady(true);
   }, []);
 
