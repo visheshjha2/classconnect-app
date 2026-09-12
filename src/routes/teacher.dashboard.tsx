@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Bell, BookOpen, Calendar, ClipboardList, CreditCard, Users } from "lucide-react";
+import { Bell, BookOpen, Calendar, ClipboardList, CreditCard, Phone, Users } from "lucide-react";
 import { toast } from "sonner";
 
 import {
@@ -117,6 +117,13 @@ function TeacherDashboard() {
             title="Payment"
             description="Fees & payment info"
             count={classData.payment.enabled ? 1 : 0}
+          />
+          <MenuTile
+            to="/teacher/contact"
+            icon={<Phone className="size-6" />}
+            title="Contact Details"
+            description="Shown in student Support"
+            count={user.phone || user.email ? 1 : 0}
           />
         </div>
 
