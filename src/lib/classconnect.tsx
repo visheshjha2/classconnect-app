@@ -186,6 +186,21 @@ function writeDb(db: Database) {
   window.localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
 }
 
+/** Homework disappears by itself once its due date has passed. */
+function pruneExpiredHomework(db: Database): Database {
+  const today = new Date();
+  const todayKey = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(
+    today.getDate(),
+  ).padStart(2, "0")}`;
+  return {
+    ...db,
+    classes: db.classes.map((c) => ({
+      ...c,
+      homework: (c.homework ?? []).filter((h) => !h.dueDate || h.dueDate >= todayKey),
+    })),
+  };
+}
+
 const id = (prefix: string) => `${prefix}_${Math.random().toString(36).slice(2, 10)}`;
 const roomCode = () => String(Math.floor(100000 + Math.random() * 900000));
 
