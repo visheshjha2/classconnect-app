@@ -49,9 +49,9 @@ export function AddButton({ onClick, label }: { onClick: () => void; label: stri
       type="button"
       aria-label={label}
       onClick={onClick}
-      className="flex size-10 items-center justify-center rounded-full bg-primary text-primary-foreground transition-colors hover:bg-primary-dark"
+      className="inline-flex size-10 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground transition-colors hover:bg-primary-dark"
     >
-      <span className="text-2xl leading-none">+</span>
+      <Plus className="size-5" strokeWidth={2.5} />
     </button>
   );
 }
