@@ -22,11 +22,18 @@ export interface User {
 
 export interface ScheduleItem {
   id: string;
-  day: string;
+  /** Legacy single-day field kept for older saved data. */
+  day?: string | undefined;
+  days?: string[] | undefined;
   title: string;
   description?: string | undefined;
   startTime: string;
   endTime: string;
+}
+
+export function scheduleDays(item: ScheduleItem): string[] {
+  if (item.days && item.days.length > 0) return item.days;
+  return item.day ? [item.day] : [];
 }
 
 export interface MaterialItem {
@@ -34,6 +41,7 @@ export interface MaterialItem {
   title: string;
   description: string;
   fileUrl?: string | undefined;
+  fileName?: string | undefined;
 }
 
 export interface HomeworkItem {
