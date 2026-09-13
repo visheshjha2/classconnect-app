@@ -1,23 +1,29 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { AtSign, Mail, MessageSquare, Phone } from "lucide-react";
+import { AtSign, Mail, MessageCircle, Phone } from "lucide-react";
 
 import { useGuard } from "@/components/Dashboard";
-import { EmptyState, PageShell } from "@/components/PageShell";
+import { ClassAvatar, EmptyState, PageShell } from "@/components/PageShell";
 
 export const Route = createFileRoute("/student/support")({
   head: () => ({
     meta: [
       { title: "Support — ClassConnect" },
-      { name: "description", content: "Contact your teacher by call, message or email." },
+      { name: "description", content: "Contact your teacher by call, WhatsApp or email." },
       { property: "og:title", content: "Support — ClassConnect" },
-      { property: "og:description", content: "Contact your teacher by call, message or email." },
+      { property: "og:description", content: "Contact your teacher by call, WhatsApp or email." },
     ],
   }),
   component: StudentSupport,
 });
 
+function whatsappLink(phone: string) {
+  const digits = phone.replace(/\D/g, "");
+  const withCountry = digits.length === 10 ? `91${digits}` : digits;
+  return `https://wa.me/${withCountry}`;
+}
+
 function StudentSupport() {
-  const { teacher } = useGuard("student");
+  const { teacher, classData } = useGuard("student");
 
   if (!teacher) {
     return (
@@ -29,6 +35,8 @@ function StudentSupport() {
 
   return (
     <PageShell title="Support" backTo="/student/dashboard">
+      <ClassAvatar src={classData?.profileImage} name={classData?.className} />
+
       <div className="cc-card flex items-center gap-4 p-5">
         <span className="flex size-16 items-center justify-center rounded-full bg-primary text-2xl font-bold text-primary-foreground">
           {teacher.fullName.charAt(0)}
@@ -52,9 +60,10 @@ function StudentSupport() {
           <>
             <Action href={`tel:${teacher.phone}`} icon={<Phone className="size-4" />} label="Call Teacher" />
             <Action
-              href={`sms:${teacher.phone}`}
-              icon={<MessageSquare className="size-4" />}
-              label="Send SMS"
+              href={whatsappLink(teacher.phone)}
+              external
+              icon={<MessageCircle className="size-4" />}
+              label="WhatsApp"
             />
           </>
         ) : null}
@@ -88,10 +97,21 @@ function Row({
   );
 }
 
-function Action({ href, icon, label }: { href: string; icon: React.ReactNode; label: string }) {
+function Action({
+  href,
+  icon,
+  label,
+  external,
+}: {
+  href: string;
+  icon: React.ReactNode;
+  label: string;
+  external?: boolean;
+}) {
   return (
     <a
       href={href}
+      {...(external ? { target: "_blank", rel: "noreferrer" } : {})}
       className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary-dark"
     >
       {icon} {label}

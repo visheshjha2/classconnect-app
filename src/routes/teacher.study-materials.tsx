@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { BookOpen, ExternalLink, Trash2 } from "lucide-react";
-import { useState } from "react";
+import { BookOpen, FileText, Trash2, Upload, X } from "lucide-react";
+import { useRef, useState } from "react";
 import { toast } from "sonner";
 
 import { useGuard } from "@/components/Dashboard";
@@ -12,13 +12,15 @@ export const Route = createFileRoute("/teacher/study-materials")({
   head: () => ({
     meta: [
       { title: "Study Materials — ClassConnect" },
-      { name: "description", content: "Share notes, links and resources with your students." },
+      { name: "description", content: "Share notes, files and resources with your students." },
       { property: "og:title", content: "Study Materials — ClassConnect" },
-      { property: "og:description", content: "Share notes, links and resources with your students." },
+      { property: "og:description", content: "Share notes, files and resources with your students." },
     ],
   }),
   component: TeacherMaterials,
 });
+
+const BLOCKED = [".zip", ".rar", ".7z", ".tar", ".gz"];
 
 function TeacherMaterials() {
   const { classData, updateClass } = useGuard("teacher");
@@ -26,8 +28,39 @@ function TeacherMaterials() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [fileUrl, setFileUrl] = useState("");
+  const [fileName, setFileName] = useState("");
+  const fileRef = useRef<HTMLInputElement>(null);
 
   const materials = classData?.materials ?? [];
+
+  const pickFile = (file: File | undefined) => {
+    if (!file) return;
+    const lower = file.name.toLowerCase();
+    if (BLOCKED.some((ext) => lower.endsWith(ext)) || lower.endsWith(".zip")) {
+      toast.error("ZIP and other archive files are not allowed");
+      if (fileRef.current) fileRef.current.value = "";
+      return;
+    }
+    if (file.size > 3 * 1024 * 1024) {
+      toast.error("File is too large. Please choose one under 3 MB.");
+      if (fileRef.current) fileRef.current.value = "";
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = () => {
+      setFileUrl(String(reader.result));
+      setFileName(file.name);
+      toast.success("File selected");
+    };
+    reader.onerror = () => toast.error("Could not read that file");
+    reader.readAsDataURL(file);
+  };
+
+  const clearFile = () => {
+    setFileUrl("");
+    setFileName("");
+    if (fileRef.current) fileRef.current.value = "";
+  };
 
   const add = () => {
     if (!title || !description) {
@@ -37,14 +70,20 @@ function TeacherMaterials() {
     updateClass({
       materials: [
         ...materials,
-        { id: newId("m"), title, description, fileUrl: fileUrl || undefined },
+        {
+          id: newId("m"),
+          title,
+          description,
+          fileUrl: fileUrl || undefined,
+          fileName: fileName || undefined,
+        },
       ],
     });
     toast.success("Study material added");
     setOpen(false);
     setTitle("");
     setDescription("");
-    setFileUrl("");
+    clearFile();
   };
 
   return (
@@ -69,11 +108,12 @@ function TeacherMaterials() {
                 {item.fileUrl ? (
                   <a
                     href={item.fileUrl}
+                    download={item.fileName ?? "study-material"}
                     target="_blank"
                     rel="noreferrer"
                     className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-primary hover:underline"
                   >
-                    <ExternalLink className="size-4" /> Open File
+                    <FileText className="size-4" /> {item.fileName ?? "Open file"}
                   </a>
                 ) : null}
               </div>
@@ -118,15 +158,40 @@ function TeacherMaterials() {
             placeholder="What this resource covers"
           />
         </label>
-        <label className="block">
-          <span className="mb-2 block text-sm font-semibold">File or Link (Optional)</span>
+        <div>
+          <span className="mb-2 block text-sm font-semibold">File from your device (Optional)</span>
           <input
-            className="cc-input"
-            value={fileUrl}
-            onChange={(e) => setFileUrl(e.target.value)}
-            placeholder="https://..."
+            ref={fileRef}
+            type="file"
+            accept=".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.txt,image/*,audio/*,video/*"
+            className="hidden"
+            onChange={(e) => pickFile(e.target.files?.[0])}
           />
-        </label>
+          <button
+            type="button"
+            onClick={() => fileRef.current?.click()}
+            className="flex w-full items-center justify-center gap-2 rounded-xl border border-dashed border-border px-4 py-3.5 text-sm font-semibold transition-colors hover:bg-accent"
+          >
+            <Upload className="size-4" />
+            {fileName ? "Choose a different file" : "Choose file from device"}
+          </button>
+          <p className="mt-2 text-xs text-muted-foreground">
+            ZIP and other archive files are not allowed. Maximum size 3 MB.
+          </p>
+          {fileName ? (
+            <div className="mt-3 flex items-center justify-between gap-3 rounded-xl border border-border px-3 py-2">
+              <span className="truncate text-sm font-medium">{fileName}</span>
+              <button
+                type="button"
+                aria-label="Remove selected file"
+                onClick={clearFile}
+                className="text-destructive"
+              >
+                <X className="size-4" />
+              </button>
+            </div>
+          ) : null}
+        </div>
       </Modal>
     </PageShell>
   );

@@ -3,6 +3,7 @@ import { Calendar, Clock } from "lucide-react";
 
 import { useGuard } from "@/components/Dashboard";
 import { EmptyState, PageShell } from "@/components/PageShell";
+import { scheduleDays } from "@/lib/classconnect";
 
 export const Route = createFileRoute("/student/schedule")({
   head: () => ({
@@ -32,9 +33,16 @@ function StudentSchedule() {
         <div className="space-y-3">
           {schedules.map((item) => (
             <div key={item.id} className="cc-card p-4">
-              <span className="inline-flex rounded-full bg-accent px-3 py-1 text-xs font-semibold text-accent-foreground">
-                {item.day}
-              </span>
+              <div className="flex flex-wrap gap-2">
+                {scheduleDays(item).map((d) => (
+                  <span
+                    key={d}
+                    className="inline-flex rounded-full bg-accent px-3 py-1 text-xs font-semibold text-accent-foreground"
+                  >
+                    {d}
+                  </span>
+                ))}
+              </div>
               <p className="mt-3 text-lg font-semibold">{item.title}</p>
               {item.description ? (
                 <p className="mt-1 text-sm text-muted-foreground">{item.description}</p>

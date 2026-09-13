@@ -23,6 +23,13 @@ export const Route = createFileRoute("/teacher/homework")({
   component: TeacherHomework,
 });
 
+function todayKey() {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(
+    d.getDate(),
+  ).padStart(2, "0")}`;
+}
+
 function TeacherHomework() {
   const { classData, updateClass } = useGuard("teacher");
   const [open, setOpen] = useState(false);
@@ -35,6 +42,10 @@ function TeacherHomework() {
   const add = () => {
     if (!title || !description) {
       toast.error("Please fill in title and description");
+      return;
+    }
+    if (dueDate && dueDate < todayKey()) {
+      toast.error("Please pick today or a future date");
       return;
     }
     updateClass({
@@ -53,6 +64,9 @@ function TeacherHomework() {
       backTo="/teacher/dashboard"
       actions={<AddButton label="Assign homework" onClick={() => setOpen(true)} />}
     >
+      <p className="mb-4 text-sm text-muted-foreground">
+        Homework with a validity date disappears automatically once that date has passed.
+      </p>
       {homework.length === 0 ? (
         <EmptyState
           icon={<ClipboardList className="size-7" />}
@@ -68,7 +82,7 @@ function TeacherHomework() {
                 <p className="mt-1 text-sm text-muted-foreground">{item.description}</p>
                 {item.dueDate ? (
                   <p className="mt-3 flex items-center gap-2 text-sm font-medium text-primary">
-                    <CalendarDays className="size-4" /> Due: {item.dueDate}
+                    <CalendarDays className="size-4" /> Valid until: {item.dueDate}
                   </p>
                 ) : null}
               </div>
@@ -114,12 +128,13 @@ function TeacherHomework() {
           />
         </label>
         <label className="block">
-          <span className="mb-2 block text-sm font-semibold">Due Date (Optional)</span>
+          <span className="mb-2 block text-sm font-semibold">Valid until (Optional)</span>
           <input
             className="cc-input"
+            type="date"
+            min={todayKey()}
             value={dueDate}
             onChange={(e) => setDueDate(e.target.value)}
-            placeholder="e.g., 2026-01-15"
           />
         </label>
       </Modal>
