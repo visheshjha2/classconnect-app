@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 
 import { useGuard } from "@/components/Dashboard";
-import { PageShell } from "@/components/PageShell";
+import { ClassAvatar, PageShell } from "@/components/PageShell";
 
 export const Route = createFileRoute("/teacher/payment")({
   head: () => ({
@@ -63,6 +63,8 @@ function TeacherPayment() {
 
   return (
     <PageShell title="Payment" backTo="/teacher/dashboard">
+      <ClassAvatar src={classData?.profileImage} name={classData?.className} />
+
       <div className="cc-card flex items-center justify-between gap-4 p-5">
         <div>
           <p className="font-semibold">Show payment section to students</p>
