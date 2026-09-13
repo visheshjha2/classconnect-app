@@ -14,13 +14,301 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      class_members: {
+        Row: {
+          blocked: boolean
+          class_id: string
+          created_at: string
+          id: string
+          student_id: string
+          updated_at: string
+        }
+        Insert: {
+          blocked?: boolean
+          class_id: string
+          created_at?: string
+          id?: string
+          student_id: string
+          updated_at?: string
+        }
+        Update: {
+          blocked?: boolean
+          class_id?: string
+          created_at?: string
+          id?: string
+          student_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "class_members_class_id_fkey"
+            columns: ["class_id"]
+            isOneToOne: false
+            referencedRelation: "classes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "class_members_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      classes: {
+        Row: {
+          class_name: string
+          created_at: string
+          id: string
+          payment_details: string | null
+          payment_enabled: boolean
+          payment_instructions: string | null
+          payment_qr_url: string | null
+          profile_image_url: string | null
+          room_id: string
+          teacher_id: string
+          updated_at: string
+        }
+        Insert: {
+          class_name?: string
+          created_at?: string
+          id?: string
+          payment_details?: string | null
+          payment_enabled?: boolean
+          payment_instructions?: string | null
+          payment_qr_url?: string | null
+          profile_image_url?: string | null
+          room_id: string
+          teacher_id: string
+          updated_at?: string
+        }
+        Update: {
+          class_name?: string
+          created_at?: string
+          id?: string
+          payment_details?: string | null
+          payment_enabled?: boolean
+          payment_instructions?: string | null
+          payment_qr_url?: string | null
+          profile_image_url?: string | null
+          room_id?: string
+          teacher_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "classes_teacher_id_fkey"
+            columns: ["teacher_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      homework: {
+        Row: {
+          class_id: string
+          created_at: string
+          description: string
+          due_date: string | null
+          id: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          class_id: string
+          created_at?: string
+          description?: string
+          due_date?: string | null
+          id?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          class_id?: string
+          created_at?: string
+          description?: string
+          due_date?: string | null
+          id?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "homework_class_id_fkey"
+            columns: ["class_id"]
+            isOneToOne: false
+            referencedRelation: "classes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      materials: {
+        Row: {
+          class_id: string
+          created_at: string
+          description: string
+          file_name: string | null
+          file_url: string | null
+          id: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          class_id: string
+          created_at?: string
+          description?: string
+          file_name?: string | null
+          file_url?: string | null
+          id?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          class_id?: string
+          created_at?: string
+          description?: string
+          file_name?: string | null
+          file_url?: string | null
+          id?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "materials_class_id_fkey"
+            columns: ["class_id"]
+            isOneToOne: false
+            referencedRelation: "classes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      notifications: {
+        Row: {
+          class_id: string
+          created_at: string
+          id: string
+          message: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          class_id: string
+          created_at?: string
+          id?: string
+          message?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          class_id?: string
+          created_at?: string
+          id?: string
+          message?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "notifications_class_id_fkey"
+            columns: ["class_id"]
+            isOneToOne: false
+            referencedRelation: "classes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          email: string | null
+          full_name: string
+          id: string
+          phone: string | null
+          role: string
+          updated_at: string
+          username: string
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          full_name: string
+          id: string
+          phone?: string | null
+          role: string
+          updated_at?: string
+          username: string
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          full_name?: string
+          id?: string
+          phone?: string | null
+          role?: string
+          updated_at?: string
+          username?: string
+        }
+        Relationships: []
+      }
+      schedules: {
+        Row: {
+          class_id: string
+          created_at: string
+          days: string[]
+          description: string | null
+          end_time: string
+          id: string
+          start_time: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          class_id: string
+          created_at?: string
+          days?: string[]
+          description?: string | null
+          end_time: string
+          id?: string
+          start_time: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          class_id?: string
+          created_at?: string
+          days?: string[]
+          description?: string | null
+          end_time?: string
+          id?: string
+          start_time?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "schedules_class_id_fkey"
+            columns: ["class_id"]
+            isOneToOne: false
+            referencedRelation: "classes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      generate_room_id: { Args: never; Returns: string }
+      is_class_member: { Args: { _class_id: string }; Returns: boolean }
+      is_class_teacher: { Args: { _class_id: string }; Returns: boolean }
+      join_class_by_room: { Args: { _room_id: string }; Returns: string }
+      purge_expired_homework: { Args: never; Returns: undefined }
+      shares_class: { Args: { _a: string; _b: string }; Returns: boolean }
+      username_available: { Args: { _username: string }; Returns: boolean }
     }
     Enums: {
       [_ in never]: never
