@@ -1,9 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { Upload, X } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 
 import { useGuard } from "@/components/Dashboard";
-import { PageShell } from "@/components/PageShell";
+import { ClassAvatar, PageShell } from "@/components/PageShell";
 
 export const Route = createFileRoute("/teacher/contact")({
   head: () => ({
@@ -11,12 +12,12 @@ export const Route = createFileRoute("/teacher/contact")({
       { title: "Contact Details — ClassConnect" },
       {
         name: "description",
-        content: "Set the phone number and email your students see in the support section.",
+        content: "Set the class picture, phone number and email your students see in support.",
       },
       { property: "og:title", content: "Contact Details — ClassConnect" },
       {
         property: "og:description",
-        content: "Set the phone number and email your students see in the support section.",
+        content: "Set the class picture, phone number and email your students see in support.",
       },
     ],
   }),
@@ -24,10 +25,11 @@ export const Route = createFileRoute("/teacher/contact")({
 });
 
 function TeacherContact() {
-  const { user, updateProfile } = useGuard("teacher");
+  const { user, classData, updateProfile, updateClass } = useGuard("teacher");
   const [fullName, setFullName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
+  const fileRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (!user) return;
@@ -35,6 +37,25 @@ function TeacherContact() {
     setPhone(user.phone ?? "");
     setEmail(user.email ?? "");
   }, [user]);
+
+  const pickPicture = (file: File | undefined) => {
+    if (!file) return;
+    if (!file.type.startsWith("image/")) {
+      toast.error("Please choose an image file");
+      return;
+    }
+    if (file.size > 2 * 1024 * 1024) {
+      toast.error("Image is too large. Please choose one under 2 MB.");
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = () => {
+      updateClass({ profileImage: String(reader.result) });
+      toast.success("Class picture updated");
+    };
+    reader.onerror = () => toast.error("Could not read that image");
+    reader.readAsDataURL(file);
+  };
 
   const save = () => {
     if (!fullName.trim()) {
@@ -59,9 +80,45 @@ function TeacherContact() {
 
   return (
     <PageShell title="Contact Details" backTo="/teacher/dashboard">
-      <p className="text-sm text-muted-foreground">
+      <ClassAvatar src={classData?.profileImage} name={classData?.className} />
+
+      <div className="cc-card space-y-3 p-5">
+        <p className="font-semibold">Class Picture</p>
+        <p className="text-sm text-muted-foreground">
+          Shown to your students at the top of the payment and support sections.
+        </p>
+        <input
+          ref={fileRef}
+          type="file"
+          accept="image/*"
+          className="hidden"
+          onChange={(e) => pickPicture(e.target.files?.[0])}
+        />
+        <button
+          type="button"
+          onClick={() => fileRef.current?.click()}
+          className="flex w-full items-center justify-center gap-2 rounded-xl border border-dashed border-border px-4 py-3.5 text-sm font-semibold transition-colors hover:bg-accent"
+        >
+          <Upload className="size-4" />
+          {classData?.profileImage ? "Choose a different picture" : "Choose picture from device"}
+        </button>
+        {classData?.profileImage ? (
+          <button
+            type="button"
+            onClick={() => {
+              updateClass({ profileImage: undefined });
+              toast.success("Class picture removed");
+            }}
+            className="inline-flex items-center gap-2 text-sm font-semibold text-destructive"
+          >
+            <X className="size-4" /> Remove picture
+          </button>
+        ) : null}
+      </div>
+
+      <p className="mt-6 text-sm text-muted-foreground">
         These details appear in the Support section of your students' dashboard, so they can call,
-        message or email you.
+        message on WhatsApp or email you.
       </p>
 
       <div className="cc-card mt-4 space-y-4 p-5">
@@ -79,7 +136,7 @@ function TeacherContact() {
         </div>
         <div>
           <label className="text-sm font-semibold" htmlFor="cc-phone">
-            Phone number
+            Phone number (WhatsApp)
           </label>
           <input
             id="cc-phone"

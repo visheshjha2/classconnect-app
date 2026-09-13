@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { BookOpen, ExternalLink } from "lucide-react";
+import { BookOpen, Download } from "lucide-react";
 
 import { useGuard } from "@/components/Dashboard";
 import { EmptyState, PageShell } from "@/components/PageShell";
@@ -37,11 +37,12 @@ function StudentMaterials() {
               {item.fileUrl ? (
                 <a
                   href={item.fileUrl}
+                  download={item.fileName ?? "study-material"}
                   target="_blank"
                   rel="noreferrer"
                   className="mt-4 inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary-dark"
                 >
-                  <ExternalLink className="size-4" /> Open File
+                  <Download className="size-4" /> {item.fileName ?? "Open File"}
                 </a>
               ) : null}
             </div>
