@@ -4,7 +4,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 import { useGuard } from "@/components/Dashboard";
-import { EmptyState, PageShell } from "@/components/PageShell";
+import { ClassAvatar, EmptyState, PageShell } from "@/components/PageShell";
 
 export const Route = createFileRoute("/student/payment")({
   head: () => ({
@@ -63,6 +63,8 @@ function StudentPayment() {
 
   return (
     <PageShell title="Payment" backTo="/student/dashboard">
+      <ClassAvatar src={classData?.profileImage} name={classData?.className} />
+
       {!hasDetails ? (
         <EmptyState
           icon={<CreditCard className="size-7" />}
