@@ -101,9 +101,9 @@ export function DeleteAccountSection({ isTeacher }: { isTeacher: boolean }) {
   const [open, setOpen] = useState(false);
   const [password, setPassword] = useState("");
 
-  const confirm = () => {
+  const confirm = async () => {
     try {
-      deleteAccount(password);
+      await deleteAccount(password);
       toast.success("Your account has been deleted");
       navigate({ to: "/" });
     } catch (error) {
