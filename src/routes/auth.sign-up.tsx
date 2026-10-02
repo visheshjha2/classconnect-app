@@ -3,7 +3,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { z } from "zod";
 
-import { Field } from "@/routes/auth.login";
+import { Field, GoogleButton } from "@/routes/auth.login";
 import { PageShell } from "@/components/PageShell";
 import { useClassConnect } from "@/lib/classconnect";
 
@@ -34,7 +34,7 @@ export const Route = createFileRoute("/auth/sign-up")({
 function SignUpPage() {
   const { role } = Route.useSearch();
   const navigate = useNavigate();
-  const { signup } = useClassConnect();
+  const { signup, loginWithGoogle } = useClassConnect();
 
   const [fullName, setFullName] = useState("");
   const [username, setUsername] = useState("");
@@ -45,9 +45,9 @@ function SignUpPage() {
   const [roomId, setRoomId] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!fullName || !username || (!email && !phone) || !password) {
+    if (!fullName || !username || !password) {
       toast.error("Please fill in all required fields");
       return;
     }
@@ -61,7 +61,7 @@ function SignUpPage() {
     }
     setLoading(true);
     try {
-      signup({
+      await signup({
         role,
         fullName,
         username,
@@ -162,18 +162,17 @@ function SignUpPage() {
           </button>
         </form>
 
+        <GoogleButton onClick={loginWithGoogle} />
+
         <p className="mt-5 text-center text-sm text-muted-foreground">
           Already have an account?{" "}
           <Link to="/auth/login" className="font-semibold text-primary hover:underline">
             Login
           </Link>
         </p>
-
-        {role === "student" ? (
-          <p className="mt-4 rounded-xl bg-surface p-4 text-xs text-muted-foreground">
-            Demo class room code: <span className="font-semibold text-foreground">482913</span>
-          </p>
-        ) : null}
+        <p className="mt-3 text-center text-xs text-muted-foreground">
+          Add an email if you want to be able to reset your password later.
+        </p>
       </div>
     </PageShell>
   );

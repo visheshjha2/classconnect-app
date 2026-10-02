@@ -11,10 +11,9 @@ export const Route = createFileRoute("/auth/login")({
       { title: "Login — ClassConnect" },
       { name: "description", content: "Log in to your ClassConnect teacher or student account." },
       { property: "og:title", content: "Login — ClassConnect" },
-      {
-        property: "og:description",
-        content: "Log in to your ClassConnect teacher or student account.",
-      },
+      { property: "og:description", content: "Log in to your ClassConnect teacher or student account." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: LoginPage,
@@ -22,26 +21,20 @@ export const Route = createFileRoute("/auth/login")({
 
 function LoginPage() {
   const navigate = useNavigate();
-  const { login } = useClassConnect();
+  const { login, loginWithGoogle } = useClassConnect();
   const [role, setRole] = useState<Role | null>(null);
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
   const [roomId, setRoomId] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!role) {
-      toast.error("Please select your role first");
-      return;
-    }
-    if (!identifier || !password) {
-      toast.error("Please fill in all required fields");
-      return;
-    }
+    if (!role) return toast.error("Please select your role first");
+    if (!identifier || !password) return toast.error("Please fill in all required fields");
     setLoading(true);
     try {
-      login({ role, identifier, password, roomId });
+      await login({ role, identifier, password, roomId });
       toast.success("Welcome back!");
       navigate({ to: role === "teacher" ? "/teacher/dashboard" : "/student/dashboard" });
     } catch (error) {
@@ -53,7 +46,7 @@ function LoginPage() {
 
   return (
     <PageShell title="Login" backTo="/">
-      <div className="rounded-2xl border border-border bg-card p-6 shadow-[var(--shadow-card)]">
+      <div className="cc-card p-6">
         <h2 className="text-2xl font-bold tracking-tight">Welcome back</h2>
         <p className="mt-1 text-sm text-muted-foreground">Login to continue to your class</p>
 
@@ -78,7 +71,7 @@ function LoginPage() {
             </div>
           </div>
 
-          <Field label="Username, Email or Phone *">
+          <Field label="Username or Email *">
             <input
               className="cc-input"
               value={identifier}
@@ -120,6 +113,8 @@ function LoginPage() {
           </button>
         </form>
 
+        <GoogleButton onClick={loginWithGoogle} />
+
         <div className="mt-5 space-y-2 text-center text-sm">
           <p>
             <Link to="/auth/forgot-password" className="font-semibold text-primary hover:underline">
@@ -128,19 +123,30 @@ function LoginPage() {
           </p>
           <p className="text-muted-foreground">
             Don&apos;t have an account?{" "}
-            <Link to="/auth/sign-up" className="font-semibold text-primary hover:underline">
+            <Link to="/" className="font-semibold text-primary hover:underline">
               Sign up
             </Link>
           </p>
         </div>
-
-        <div className="mt-6 rounded-xl bg-surface p-4 text-xs text-muted-foreground">
-          <p className="font-semibold text-foreground">Demo accounts</p>
-          <p className="mt-1">Teacher — username: ananya · password: demo123</p>
-          <p>Student — username: rahul · password: demo123</p>
-        </div>
       </div>
     </PageShell>
+  );
+}
+
+export function GoogleButton({ onClick }: { onClick: () => Promise<void> }) {
+  return (
+    <>
+      <div className="my-5 flex items-center gap-3 text-xs text-muted-foreground">
+        <span className="h-px flex-1 bg-border" /> or <span className="h-px flex-1 bg-border" />
+      </div>
+      <button
+        type="button"
+        onClick={() => onClick().catch((e) => toast.error((e as Error).message))}
+        className="w-full rounded-xl border border-border bg-card px-4 py-3.5 text-sm font-semibold transition-colors hover:bg-accent"
+      >
+        Continue with Google
+      </button>
+    </>
   );
 }
 

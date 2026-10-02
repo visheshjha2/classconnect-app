@@ -26,13 +26,14 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   const navigate = useNavigate();
-  const { ready, user } = useClassConnect();
+  const { ready, user, needsProfile } = useClassConnect();
   const [role, setRole] = useState<Role | null>(null);
 
   useEffect(() => {
-    if (!ready || !user) return;
-    navigate({ to: user.role === "teacher" ? "/teacher/dashboard" : "/student/dashboard" });
-  }, [ready, user, navigate]);
+    if (!ready) return;
+    if (user) navigate({ to: user.role === "teacher" ? "/teacher/dashboard" : "/student/dashboard" });
+    else if (needsProfile) navigate({ to: "/auth/complete-profile" });
+  }, [ready, user, needsProfile, navigate]);
 
   return (
     <div className="min-h-screen bg-surface">
