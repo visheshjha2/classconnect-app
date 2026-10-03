@@ -30,8 +30,8 @@ function LoginPage() {
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!role) return toast.error("Please select your role first");
-    if (!identifier || !password) return toast.error("Please fill in all required fields");
+    if (!role) { toast.error("Please select your role first"); return; }
+    if (!identifier || !password) { toast.error("Please fill in all required fields"); return; }
     setLoading(true);
     try {
       await login({ role, identifier, password, roomId });

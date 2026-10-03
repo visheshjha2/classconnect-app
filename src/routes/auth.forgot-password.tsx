@@ -28,7 +28,7 @@ function ForgotPasswordPage() {
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email.includes("@")) return toast.error("Please enter the email on your account");
+    if (!email.includes("@")) { toast.error("Please enter the email on your account"); return; }
     setLoading(true);
     try {
       await requestPasswordReset(email);
