@@ -39,9 +39,9 @@ function CompleteProfile() {
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!fullName || !username) return toast.error("Please fill in all required fields");
-    if (role === "teacher" && !className) return toast.error("Please enter a class name");
-    if (role === "student" && !roomId) return toast.error("Please enter a room ID to join");
+    if (!fullName || !username) { toast.error("Please fill in all required fields"); return; }
+    if (role === "teacher" && !className) { toast.error("Please enter a class name"); return; }
+    if (role === "student" && !roomId) { toast.error("Please enter a room ID to join"); return; }
     setLoading(true);
     try {
       await completeProfile({ role, fullName, username, phone, className, roomId });

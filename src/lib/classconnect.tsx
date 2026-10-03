@@ -10,6 +10,11 @@ import {
 import { toast } from "sonner";
 
 import { supabase } from "@/integrations/supabase/client";
+import type { Database as DB } from "@/integrations/supabase/types";
+
+type ClassRow = DB["public"]["Tables"]["classes"]["Row"];
+type ClassUpdate = DB["public"]["Tables"]["classes"]["Update"];
+type ProfileUpdate = DB["public"]["Tables"]["profiles"]["Update"];
 import { lovable } from "@/integrations/lovable";
 import { deleteMyAccount, signInWithUsername } from "@/lib/account.functions";
 
@@ -196,7 +201,7 @@ export function ClassConnectProvider({ children }: { children: ReactNode }) {
     const me = toUser(profile);
     setUser(me);
 
-    let klass: Record<string, any> | null = null;
+    let klass: ClassRow | null = null;
     if (me.role === "teacher") {
       await supabase.rpc("purge_expired_homework");
       const { data } = await supabase.from("classes").select("*").eq("teacher_id", uid).maybeSingle();
@@ -475,7 +480,7 @@ export function ClassConnectProvider({ children }: { children: ReactNode }) {
   const updateProfile: Ctx["updateProfile"] = async (patch) => {
     const uid = authIdRef.current;
     if (!uid) throw new Error("You are not signed in");
-    const row: Record<string, string | null> = {};
+    const row: ProfileUpdate = {};
     if (patch.fullName !== undefined) row.full_name = patch.fullName;
     if ("phone" in patch) row.phone = patch.phone ?? null;
     if ("email" in patch) row.email = patch.email ?? null;
@@ -490,7 +495,7 @@ export function ClassConnectProvider({ children }: { children: ReactNode }) {
     const current = classData;
     if (!current) return;
     const cid = current.id;
-    const row: Record<string, unknown> = {};
+    const row: ClassUpdate = {};
 
     if (patch.className !== undefined) row.class_name = patch.className;
 
